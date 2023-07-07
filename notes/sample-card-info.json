@@ -91,5 +91,13 @@
     "story_spotlight":false,
     "edhrec_rank":6206,
     "penny_rank":11400,
-    "prices":{"usd":"0.42","usd_foil":"4.48","usd_etched":null,"eur":"0.10","eur_foil":"0.81","tix":"0.02"},
+    "prices":
+    {
+        "usd":"0.42",
+        "usd_foil":"4.48",
+        "usd_etched":null,
+        "eur":"0.10",
+        "eur_foil":"0.81",
+        "tix":"0.02"
+    },
     "related_uris":{"gatherer":"https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=109722","tcgplayer_infinite_articles":"https://infinite.tcgplayer.com/search?contentMode=article\u0026game=magic\u0026partner=scryfall\u0026q=Fury+Sliver\u0026utm_campaign=affiliate\u0026utm_medium=api\u0026utm_source=scryfall","tcgplayer_infinite_decks":"https://infinite.tcgplayer.com/search?contentMode=deck\u0026game=magic\u0026partner=scryfall\u0026q=Fury+Sliver\u0026utm_campaign=affiliate\u0026utm_medium=api\u0026utm_source=scryfall","edhrec":"https://edhrec.com/route/?cc=Fury+Sliver"}}
