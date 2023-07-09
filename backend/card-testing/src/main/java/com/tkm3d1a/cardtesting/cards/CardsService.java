@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -16,8 +17,23 @@ public class CardsService {
 
     public void addSingleCard(SingleCard singleCard){
         //check if card is in DB all ready
+        saveNewSingleCard(singleCard);
+    }
+
+    public void addMultipleCards(List<SingleCard> multipleCards) {
+        for(SingleCard singleCard : multipleCards){
+            saveNewSingleCard(singleCard);
+        }
+    }
+
+    /**
+     * Extraction of {@code singleCard} information to save into database.
+     *
+     * @param singleCard a POJO for a json object gotten from the Scryfall API representing a single MTG card
+     */
+    private void saveNewSingleCard(SingleCard singleCard) {
         if(cardsRepository.existsById(singleCard.getId())){
-            log.warn("CARD EXISTS");
+            log.warn("CARD EXISTS: {}", singleCard.getName());
         } else {
             Cards card = new Cards();
             card.setId(singleCard.getId());
@@ -27,11 +43,6 @@ public class CardsService {
             card.setCardColorIdentity(colorId);
             String colors = convertArrayListToString(singleCard.getColors());
             card.setCardColors(colors);
-//            card.setCardIsFullArt(singleCard.isFull_art());
-//            card.setCardIsPromo(singleCard.isPromo());
-//            card.setCardIsReprint(singleCard.isReprint());
-//            card.setCardIsReserved(singleCard.isReserved());
-//            card.setCardIsVariation(singleCard.isVariation());
             card.setCardLayout(singleCard.getLayout());
             card.setCardManaCost(singleCard.getMana_cost());
             card.setCardName(singleCard.getName());
@@ -45,6 +56,12 @@ public class CardsService {
         }
     }
 
+    /**
+     * Takes an {@link ArrayList<String>} and converts it to a regular string for database storage.
+     *
+     * @param passedArrayList a passed array of {@link String} objects to be converted to a single string
+     * @return string A String representation of the {@code passedArrayList}
+     */
     private static String convertArrayListToString(ArrayList<String> passedArrayList) {
         StringBuilder newStringBuilder = new StringBuilder();
         for(String s : passedArrayList){
@@ -52,6 +69,8 @@ public class CardsService {
             newStringBuilder.append(',');
         }
         int i = newStringBuilder.length();
+        if(i == 0) return "";
         return newStringBuilder.substring(0,i-1);
     }
+
 }
