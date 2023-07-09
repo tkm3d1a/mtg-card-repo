@@ -1,6 +1,6 @@
 package com.tkm3d1a.cardtesting.cards;
 
-import com.tkm3d1a.cardtesting.scryfall.SingleCard;
+import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.scryfall;
+package com.tkm3d1a.cardtesting.scryfall.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
