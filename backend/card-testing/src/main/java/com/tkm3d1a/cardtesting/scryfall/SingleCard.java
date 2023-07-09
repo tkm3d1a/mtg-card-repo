@@ -38,6 +38,8 @@ public class SingleCard {
     private ArrayList<String> colors;
     private ArrayList<String> color_identity;
     private ArrayList<String> keywords;
+    //TODO: Need to add handling of "card faces"
+    //TODO: Need to create "card_faces" POJO
     private Legalities legalities;
     private ArrayList<String> games;
     private boolean reserved;
