@@ -15,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 public class Cards {
+
     @Id
     @Column(
             length = 36
