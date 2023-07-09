@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -25,17 +27,16 @@ public class CardsController {
     @RequestMapping(method = RequestMethod.POST, value = "/test-add")
     public void addTestCard(@RequestBody SingleCard singleCard){
         log.info("--------------------/test-add end point start--------------------");
-        StringBuilder colorId = new StringBuilder();
-        for(String s : singleCard.getColor_identity()){
-            colorId.append(s);
-            colorId.append(',');
-        }
-        int i = colorId.length();
-        String colorIdString = colorId.substring(0,i-1);
-        log.info(colorIdString);
-        log.info("--------------------/test-add end point-------------------------");
-        log.info("--------------------calling cardService-------------------------");
+        log.info("--------------------calling cardService--------------------------");
         cardsService.addSingleCard(singleCard);
-        log.info("--------------------/test-add end point end---------------------");
+        log.info("--------------------/test-add end point end----------------------");
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/test-bulk-add")
+    public void addBulkCards(@RequestBody List<SingleCard> multipleCards){
+        log.info("--------------------/test-add end point start--------------------");
+        log.info("--------------------calling cardService--------------------------");
+        cardsService.addMultipleCards(multipleCards);
+        log.info("--------------------/test-add end point end----------------------");
     }
 }
