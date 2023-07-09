@@ -44,13 +44,16 @@ public class Cards {
     private String cardToughness;
     private String cardColors;
     private String cardColorIdentity;
-    private boolean cardIsReserved;
-    private boolean cardIsFoil;
-    private boolean cardIsOversize;
-    private boolean cardIsPromo;
-    private boolean cardIsReprint;
-    private boolean cardIsVariation;
-    private boolean cardIsFullArt;
+
+    //TODO: Decide on removal of tracking these items
+    //  They are only used for if these variations exist for this card itself
+    //  They do not act as a boolean check on if this specific card is or is not foil
+//    private boolean cardIsReserved;
+//    private boolean cardIsOversize;
+//    private boolean cardIsPromo;
+//    private boolean cardIsReprint;
+//    private boolean cardIsVariation;
+//    private boolean cardIsFullArt;
 
     @Override
     public boolean equals(Object o) {
