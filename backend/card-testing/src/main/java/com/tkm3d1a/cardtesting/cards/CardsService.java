@@ -1,5 +1,7 @@
 package com.tkm3d1a.cardtesting.cards;
 
+import com.tkm3d1a.cardtesting.cardLeagalities.CardLegalitiesService;
+import com.tkm3d1a.cardtesting.cardPrices.CardPricesService;
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,12 @@ public class CardsService {
 
     @Resource
     private CardsRepository cardsRepository;
+
+    @Resource
+    private CardPricesService cardPricesService;
+
+    @Resource
+    private CardLegalitiesService cardLegalitiesService;
 
     public void addSingleCard(SingleCard singleCard){
         //check if card is in DB all ready
@@ -52,8 +60,14 @@ public class CardsService {
             card.setCardSetName(singleCard.getSet_name());
             card.setCardToughness(singleCard.getToughness());
             card.setCardTypeLine(singleCard.getType_line());
+
             cardsRepository.save(card);
         }
+//        log.info("--------------------calling cardPricesService--------------------");
+        cardPricesService.updateCardPrices(singleCard);
+//        log.info("--------------------calling cardLegalitiesService----------------");
+        cardLegalitiesService.updateCardLegalities(singleCard);
+
     }
 
     /**
