@@ -23,3 +23,21 @@ spring.mvc.hiddenmethod.filter.enabled=true
 ```
 
 - Ensure POM file matches from `./card-testing` to make sure all dependicies gathered during testing are added
+
+## Reading CSV's
+
+- Plan to use `OpenCSV`
+  - Documentation here: [OpenCSV Docs](https://opencsv.sourceforge.net/#quick_start)
+  - Need to create special OpenCSVBean to read
+  - need to test if bean can be reused or if it should be a special bean just for getting the input data
+  - to add to maven:
+
+```xml
+  <dependency>
+    <groupId>com.opencsv</groupId>
+    <artifactId>opencsv</artifactId>
+    <version>5.x</version>
+  </dependency>
+```
+
+TODO: Can this be expanded to cover importing the large json file as well??
