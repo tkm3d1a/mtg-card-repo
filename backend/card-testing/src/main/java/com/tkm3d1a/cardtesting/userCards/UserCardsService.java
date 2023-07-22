@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -45,16 +46,17 @@ public class UserCardsService {
                 userCardsCSVBeans.get(20).isFoil(),
                 userCardsCSVBeans.get(20).isList());
         log.info("Adding Cards to database...");
-        //TODO: Investigate ways to speed this up, currently takes ~30 seconds for 800 card file
+
+        List<UserCards> userCards = new ArrayList<>();
         for(UserCardsCSVBean bean : userCardsCSVBeans){
             UserCards userCard = new UserCards();
             userCard.setSetID(bean.getSetID());
             userCard.setCollectorNumber(bean.getCollectorNumber());
             userCard.setIsFoil(bean.isFoil());
             userCard.setIsList(bean.isList());
-            userCardsRepository.save(userCard);
-//            log.info("Card Added!");
+            userCards.add(userCard);
         }
+        userCardsRepository.saveAll(userCards);
         log.info("************************************************");
     }
 }
