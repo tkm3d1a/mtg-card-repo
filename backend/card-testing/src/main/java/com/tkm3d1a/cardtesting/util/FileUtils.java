@@ -34,12 +34,15 @@ public class FileUtils {
     }
 
     public static boolean isCSVFile(MultipartFile file){
+        log.info("********FileUtils isCSVFile*********");
         if(TYPE.equals(file.getContentType())){
             log.info("File uploaded is CSV");
+            log.info("************************************");
             return true;
         }
 
         log.warn("File uploaded is not csv");
+        log.info("************************************");
         return false;
     }
 }

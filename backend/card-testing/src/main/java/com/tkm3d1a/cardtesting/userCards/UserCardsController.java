@@ -25,6 +25,7 @@ public class UserCardsController {
                 userCardsService.uploadBulkCards(file);
                 message = "File " + file.getOriginalFilename() + " uploaded successfully!";
             } catch (Exception e) {
+                e.printStackTrace();
                 message = e.getMessage();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(message);

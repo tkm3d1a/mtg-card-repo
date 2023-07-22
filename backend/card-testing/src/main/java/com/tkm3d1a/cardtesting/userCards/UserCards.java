@@ -1,8 +1,6 @@
 package com.tkm3d1a.cardtesting.userCards;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -14,5 +12,12 @@ import lombok.*;
 public class UserCards {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private int userCardId;
+
+    private int collectorNumber;
+    private String setID;
+    private Boolean isFoil;
+    private Boolean isList;
 }
