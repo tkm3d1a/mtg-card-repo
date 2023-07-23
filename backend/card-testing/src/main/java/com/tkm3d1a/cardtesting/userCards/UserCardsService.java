@@ -1,6 +1,7 @@
 package com.tkm3d1a.cardtesting.userCards;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.tkm3d1a.cardtesting.userCards.objects.UserCardJSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,23 @@ public class UserCardsService {
         }
         userCardsRepository.saveAll(userCards);
         log.info("************************************************");
+    }
+
+    public int addSingleCard(UserCardJSON userCardJSON) {
+        UserCards userCard = new UserCards();
+        //TODO: validate is not negative and is integer
+        userCard.setCollectorNumber(userCardJSON.getCollectorNumber());
+        //TODO: validate string is between 3-5 letters
+        //TODO: ensure string is set to all capital letters
+        userCard.setSetID(userCardJSON.getSetLetters());
+        //TODO: validate is boolean
+        userCard.setIsFoil(userCardJSON.isFoil());
+        //TODO: validate is boolean
+        userCard.setIsList(userCardJSON.isList());
+        userCardsRepository.save(userCard);
+
+        return userCardsRepository.countByCollectorNumberEqualsAndSetIDEquals(
+                userCard.getCollectorNumber(),
+                userCard.getSetID());
     }
 }

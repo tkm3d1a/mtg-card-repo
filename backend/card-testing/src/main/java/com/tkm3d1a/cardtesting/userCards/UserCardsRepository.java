@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserCardsRepository extends JpaRepository<UserCards, Integer> {
+
+    int countByCollectorNumberEqualsAndSetIDEquals(int collectorNumber, String setID);
+
 }

@@ -1,13 +1,11 @@
 package com.tkm3d1a.cardtesting.userCards;
 
+import com.tkm3d1a.cardtesting.userCards.objects.UserCardJSON;
 import com.tkm3d1a.cardtesting.util.FileUtils;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -35,6 +33,21 @@ public class UserCardsController {
             return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                     .body(message);
         }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(message);
+    }
+
+    @PostMapping(value = "/add-single-card")
+    public ResponseEntity<?> addSingleCard(@RequestBody UserCardJSON userCardJSON){
+
+        int cardCount = userCardsService.addSingleCard(userCardJSON);
+        String message = "Card inserted:\n\tSet: " +
+                userCardJSON.getSetLetters() +
+                "\n\tCN: " +
+                userCardJSON.getCollectorNumber() +
+                "\nTotal number collected:\n" +
+                "\t" + cardCount;
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(message);
     }
