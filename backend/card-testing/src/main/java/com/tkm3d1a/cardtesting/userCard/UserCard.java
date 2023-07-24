@@ -1,5 +1,6 @@
-package com.tkm3d1a.cardtesting.userCards;
+package com.tkm3d1a.cardtesting.userCard;
 
+import com.tkm3d1a.cardtesting.appUser.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,12 +10,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class UserCards {
+public class UserCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private int userCardId;
+
+    @ManyToOne
+    @JoinColumn(name = "appUserId")
+    private AppUser appUser;
 
     private int collectorNumber;
     private String setID;

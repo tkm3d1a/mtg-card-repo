@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.userCards.objects;
+package com.tkm3d1a.cardtesting.userCard.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
