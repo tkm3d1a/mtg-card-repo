@@ -1,6 +1,7 @@
 package com.tkm3d1a.cardtesting.userCard;
 
 import com.tkm3d1a.cardtesting.appUser.AppUser;
+import com.tkm3d1a.cardtesting.cards.Cards;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,11 @@ public class UserCard {
     @ManyToOne
     @JoinColumn(name = "appUserId")
     private AppUser appUser;
+
+    //TODO: identify where to conduct linking of a user card to an actual card
+//    @OneToOne
+//    @JoinColumn(name = "id")
+//    private Cards card;
 
     private int collectorNumber;
     private String setID;
