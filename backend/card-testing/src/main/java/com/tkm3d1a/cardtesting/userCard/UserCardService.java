@@ -83,4 +83,8 @@ public class UserCardService {
                 userCard.getCollectorNumber(),
                 userCard.getSetID());
     }
+
+    public List<UserCard> getAllCards(AppUser appUser) {
+        return userCardRepository.findAllByAppUserIs(appUser);
+    }
 }
