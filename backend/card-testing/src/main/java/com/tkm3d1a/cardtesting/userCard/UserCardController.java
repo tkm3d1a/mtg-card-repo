@@ -5,12 +5,15 @@ import com.tkm3d1a.cardtesting.appUser.AppUserService;
 import com.tkm3d1a.cardtesting.userCard.objects.UserCardJSON;
 import com.tkm3d1a.cardtesting.util.FileUtils;
 import jakarta.annotation.Resource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -105,7 +108,16 @@ public class UserCardController {
      * @return {@code JSON} object containing all cards owned by the passed user
      */
     @GetMapping(value = "/cards")
-    public ResponseEntity<?> getAllCards(@RequestHeader("userName") String userName) {
+    public ResponseEntity<?> getAllCardsJSON(@RequestHeader("userName") String userName,
+                                             @RequestHeader(value = "return",
+                                                     required = false) String returnType) throws IOException {
+
+        if(returnType != null && !returnType.isEmpty()) {
+            if (returnType.equalsIgnoreCase("file")) {
+                return getAllCardsCSV(userName, returnType);
+            }
+        }
+
         AppUser foundUser;
         try{
             foundUser = appUserService.confirmUserExists(userName);
@@ -118,5 +130,28 @@ public class UserCardController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userCards);
+    }
+
+    @GetMapping(value = "/cards", produces = "text/csv")
+    public ResponseEntity<?> getAllCardsCSV(@RequestHeader("userName") String userName,
+                                            @RequestHeader("return") String returnType) throws IOException {
+        if(!returnType.equalsIgnoreCase("file")){
+            return getAllCardsJSON(userName, returnType);
+        }
+
+        AppUser foundUser;
+        try{
+            foundUser = appUserService.confirmUserExists(userName);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
+        String fileName = "cards.csv";
+        File file = userCardService.writeCardsToCSV(foundUser);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename="+fileName)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(new FileSystemResource(file));
     }
 }

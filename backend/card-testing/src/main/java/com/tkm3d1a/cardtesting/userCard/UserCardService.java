@@ -1,5 +1,6 @@
 package com.tkm3d1a.cardtesting.userCard;
 
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.tkm3d1a.cardtesting.appUser.AppUser;
 import com.tkm3d1a.cardtesting.userCard.objects.UserCardCSVBean;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -86,5 +88,29 @@ public class UserCardService {
 
     public List<UserCard> getAllCards(AppUser appUser) {
         return userCardRepository.findAllByAppUserIs(appUser);
+    }
+
+    public File writeCardsToCSV(AppUser foundUser) throws IOException {
+        log.info("********UserCardService writeCardsToCSV*********");
+        log.info("Creating file...");
+        Path filePath = Files.createTempFile(null, ".csv");
+        File file = new File(filePath.toUri());
+        try (FileWriter outputFile = new FileWriter(file)) {
+            CSVWriter csvWriter = new CSVWriter(outputFile);
+            String[] header = {"ScryfallID","Count"};
+            csvWriter.writeNext(header);
+            log.info("File created");
+            List<UserCard> userCards = userCardRepository.findAllByAppUserIs(foundUser);
+            String[] line = new String[2];
+            for(UserCard userCard : userCards){
+                line[0] = Integer.toString(userCard.getCollectorNumber());
+                line[1] = userCard.getSetID();
+                csvWriter.writeNext(line);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        log.info("************************************************");
+        return file;
     }
 }
