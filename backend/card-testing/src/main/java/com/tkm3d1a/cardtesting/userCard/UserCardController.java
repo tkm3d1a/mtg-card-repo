@@ -105,6 +105,7 @@ public class UserCardController {
      * Finds and returns all cards that are owned by the passed user.
      * <br>
      * @param userName include in Header to indicate which username to retrieve cards for
+     * @param returnType only used when requesting CSV data be returned instead of JSON
      * @return {@code JSON} object containing all cards owned by the passed user
      */
     @GetMapping(value = "/cards")
@@ -132,6 +133,13 @@ public class UserCardController {
                 .body(userCards);
     }
 
+    /**
+     * Finds and returns all cards that are owned by the passed user as a CSV file.
+     * <br>
+     * @param userName include in Header to indicate which username to retrieve cards for
+     * @param returnType set as {@code file} when CSV data is to be returned instead of JSON (default is JSON)
+     * @return {@code CSV} file containing all cards owned by the passed user
+     */
     @GetMapping(value = "/cards", produces = "text/csv")
     public ResponseEntity<?> getAllCardsCSV(@RequestHeader("userName") String userName,
                                             @RequestHeader("return") String returnType) throws IOException {
