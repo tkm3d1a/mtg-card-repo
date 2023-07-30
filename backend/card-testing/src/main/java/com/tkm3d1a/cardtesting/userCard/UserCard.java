@@ -23,9 +23,9 @@ public class UserCard {
     private AppUser appUser;
 
     //TODO: identify where to conduct linking of a user card to an actual card
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    private Cards card;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Cards card;
 
     private int collectorNumber;
     private String setID;
