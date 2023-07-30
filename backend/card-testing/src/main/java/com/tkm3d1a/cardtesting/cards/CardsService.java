@@ -23,9 +23,29 @@ public class CardsService {
     @Resource
     private CardLegalitiesService cardLegalitiesService;
 
-    public void addSingleCard(SingleCard singleCard){
+    public Cards addSingleCard(SingleCard singleCard){
         //check if card is in DB all ready
-        saveNewSingleCard(singleCard);
+        Cards addedCard = saveNewSingleCard(singleCard);
+        log.info("Added Card");
+        return addedCard;
+    }
+
+    public Cards getCardById(String id) throws Exception {
+        if (cardsRepository.findById(id).isPresent()) {
+            return cardsRepository.findById(id).get();
+        } else {
+            throw new Exception("Card not found!");
+        }
+    }
+
+    public Cards getCardBySetAndCollector(String setLetters, String collectorNumber) throws Exception {
+        if(cardsRepository.findByCardSetLettersAndCardCollectorNumber(
+                setLetters, collectorNumber).isPresent()) {
+            return cardsRepository.findByCardSetLettersAndCardCollectorNumber(
+                    setLetters, collectorNumber).get();
+        } else {
+            throw new Exception("Card not found!");
+        }
     }
 
     public void addMultipleCards(List<SingleCard> multipleCards) {
@@ -39,7 +59,8 @@ public class CardsService {
      *
      * @param singleCard a POJO for a json object gotten from the Scryfall API representing a single MTG card
      */
-    private void saveNewSingleCard(SingleCard singleCard) {
+    private Cards saveNewSingleCard(SingleCard singleCard) {
+        Cards savedCard = new Cards();
         if(cardsRepository.existsById(singleCard.getId())){
             log.warn("CARD EXISTS: {}", singleCard.getName());
         } else {
@@ -49,8 +70,10 @@ public class CardsService {
             card.setCardCollectorNumber(singleCard.getCollector_number());
             String colorId = convertArrayListToString(singleCard.getColor_identity());
             card.setCardColorIdentity(colorId);
-            String colors = convertArrayListToString(singleCard.getColors());
-            card.setCardColors(colors);
+            if(!singleCard.getLayout().equals("transform")){
+                String colors = convertArrayListToString(singleCard.getColors());
+                card.setCardColors(colors);
+            }
             card.setCardLayout(singleCard.getLayout());
             card.setCardManaCost(singleCard.getMana_cost());
             card.setCardName(singleCard.getName());
@@ -61,12 +84,13 @@ public class CardsService {
             card.setCardToughness(singleCard.getToughness());
             card.setCardTypeLine(singleCard.getType_line());
 
-            cardsRepository.save(card);
+            savedCard = cardsRepository.save(card);
         }
 //        log.info("--------------------calling cardPricesService--------------------");
         cardPricesService.updateCardPrices(singleCard);
 //        log.info("--------------------calling cardLegalitiesService----------------");
         cardLegalitiesService.updateCardLegalities(singleCard);
+        return savedCard;
 
     }
 

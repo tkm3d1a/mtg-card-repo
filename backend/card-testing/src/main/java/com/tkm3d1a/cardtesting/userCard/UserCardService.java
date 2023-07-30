@@ -3,6 +3,10 @@ package com.tkm3d1a.cardtesting.userCard;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.tkm3d1a.cardtesting.appUser.AppUser;
+import com.tkm3d1a.cardtesting.cards.Cards;
+import com.tkm3d1a.cardtesting.cards.CardsService;
+import com.tkm3d1a.cardtesting.scryfall.ScryfallService;
+import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
 import com.tkm3d1a.cardtesting.userCard.objects.UserCardCSVBean;
 import com.tkm3d1a.cardtesting.userCard.objects.UserCardJSON;
 import jakarta.annotation.Resource;
@@ -25,6 +29,12 @@ public class UserCardService {
 
     @Resource
     private UserCardRepository userCardRepository;
+
+    @Resource
+    private ScryfallService scryfallService;
+
+    @Resource
+    private CardsService cardsService;
 
     public void uploadBulkCards(MultipartFile multipartFile, AppUser appUser) throws IOException {
         //TODO: identify and create temporary storage location for file storage
@@ -56,28 +66,34 @@ public class UserCardService {
         for(UserCardCSVBean bean : userCardCSVBeans){
             UserCard userCard = new UserCard();
             userCard.setAppUser(appUser);
+
+            Cards card = findCard(bean.getSetID(), bean.getCollectorNumber());
+            userCard.setCard(card);
+
             userCard.setSetID(bean.getSetID());
             userCard.setCollectorNumber(bean.getCollectorNumber());
             userCard.setIsFoil(bean.isFoil());
             userCard.setIsList(bean.isList());
+
             userCards.add(userCard);
         }
         userCardRepository.saveAll(userCards);
         log.info("************************************************");
     }
 
+
     public int addSingleCard(UserCardJSON userCardJSON, AppUser appUser) {
         UserCard userCard = new UserCard();
         userCard.setAppUser(appUser);
-        //TODO: validate is not negative and is integer
+
+        Cards card = findCard(userCardJSON.getSetLetters(), userCardJSON.getCollectorNumber());
+        userCard.setCard(card);
+
         userCard.setCollectorNumber(userCardJSON.getCollectorNumber());
-        //TODO: validate string is between 3-5 letters
-        //TODO: ensure string is set to all capital letters
         userCard.setSetID(userCardJSON.getSetLetters());
-        //TODO: validate is boolean
         userCard.setIsFoil(userCardJSON.isFoil());
-        //TODO: validate is boolean
         userCard.setIsList(userCardJSON.isList());
+
         userCardRepository.save(userCard);
 
         return userCardRepository.countByAppUserEqualsAndCollectorNumberEqualsAndSetIDEquals(
@@ -103,8 +119,9 @@ public class UserCardService {
             List<UserCard> userCards = userCardRepository.findAllByAppUserIs(foundUser);
             String[] line = new String[2];
             for(UserCard userCard : userCards){
-                line[0] = Integer.toString(userCard.getCollectorNumber());
-                line[1] = userCard.getSetID();
+                line[0] = userCard.getCard().getId();
+                //TODO: add counting of total cards somewhere?
+                line[1] = userCard.getSetID(); //TODO: change to total count of the card ID above
                 csvWriter.writeNext(line);
             }
         } catch (Exception e) {
@@ -112,5 +129,25 @@ public class UserCardService {
         }
         log.info("************************************************");
         return file;
+    }
+
+    ///////////////////////
+    // PRIVATE FUNCTIONS //
+    ///////////////////////
+    private Cards findCard(String setID, int collectorNumber) {
+        Cards foundCard;
+
+        try {
+            foundCard = cardsService.getCardBySetAndCollector(setID, Integer.toString(collectorNumber));
+            log.info("Card found in database!");
+        } catch (Exception e){
+            log.info("Card not in Database, adding to database now...");
+            SingleCard scryfallFoundCard = scryfallService.callCardSearchSetAndCollectorNumber(
+                    setID,
+                    Integer.toString(collectorNumber));
+            foundCard = cardsService.addSingleCard(scryfallFoundCard);
+        }
+
+        return foundCard;
     }
 }
