@@ -97,3 +97,26 @@ Once collected, create new entry in `user_info`. Generate UUID for user, assign 
 - [ ] Base webform to access API
 - [ ] Base DB and access setup
 - [ ] placeholder
+
+## Misc notes
+
+- Possible webscraping of TCGplayer for historical card data
+  - Easy to navigate to get the price tables for card
+  - can navigate directly to card with `[https://www.tcgplayer.com/product/<TCGPLAYER_ID>?Language=English)`
+  - chain to get to card data:
+    - div->app
+    - div->marketplace
+    - section->marketplace__content
+    - section->product-details
+    - div->product-details__product
+    - section->product-details__price-guide
+    - div->price-guide more
+    - span->martech-charts-history
+    - div->martech-charts-history
+    - div->martech-charts-content
+    - div->martech-charts-chart
+    - div->chart-container
+    - canvas
+    - table
+    - tbody->tr by_date
+    - ![tcgplayer html chart](tcg_html_inspect_charts.png)
