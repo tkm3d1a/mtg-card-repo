@@ -6,7 +6,7 @@ This project is born out of a need for a way to store and track card information
 
 ## Whats implemented so far
 
-### Features currently completed:
+### Features currently completed
 
 - Import of bulk [Scryfall](https://scryfall.com/docs/api) card data either one by one or by file import
   - Tested size limitation of 100MB files maximum
