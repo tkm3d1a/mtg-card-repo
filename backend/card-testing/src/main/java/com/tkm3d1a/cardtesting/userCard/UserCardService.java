@@ -134,17 +134,17 @@ public class UserCardService {
     ///////////////////////
     // PRIVATE FUNCTIONS //
     ///////////////////////
-    private Cards findCard(String setID, int collectorNumber) {
+    private Cards findCard(String setID, String collectorNumber) {
         Cards foundCard;
 
         try {
-            foundCard = cardsService.getCardBySetAndCollector(setID, Integer.toString(collectorNumber));
+            foundCard = cardsService.getCardBySetAndCollector(setID, collectorNumber);
             log.info("Card found in database!");
         } catch (Exception e){
             log.info("Card not in Database, adding to database now...");
             SingleCard scryfallFoundCard = scryfallService.callCardSearchSetAndCollectorNumber(
                     setID,
-                    Integer.toString(collectorNumber));
+                    collectorNumber);
             foundCard = cardsService.addSingleCard(scryfallFoundCard);
         }
 

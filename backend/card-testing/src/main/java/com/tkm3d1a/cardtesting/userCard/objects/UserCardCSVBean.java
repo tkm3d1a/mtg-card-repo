@@ -11,7 +11,7 @@ import lombok.Setter;
 public class UserCardCSVBean {
 
     @CsvBindByName
-    private int collectorNumber;
+    private String collectorNumber;
     @CsvBindByName
     private String setID;
     @CsvBindByName

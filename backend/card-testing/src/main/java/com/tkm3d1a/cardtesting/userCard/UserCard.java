@@ -27,7 +27,7 @@ public class UserCard {
     @JoinColumn(name = "id")
     private Cards card;
 
-    private int collectorNumber;
+    private String collectorNumber;
     private String setID;
     private Boolean isFoil;
     private Boolean isList;

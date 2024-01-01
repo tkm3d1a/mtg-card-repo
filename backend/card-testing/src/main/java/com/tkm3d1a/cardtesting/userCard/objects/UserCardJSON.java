@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserCardJSON {
     private String setLetters;
-    private int collectorNumber;
+    private String collectorNumber;
     private boolean isFoil;
     private boolean isList;
 }

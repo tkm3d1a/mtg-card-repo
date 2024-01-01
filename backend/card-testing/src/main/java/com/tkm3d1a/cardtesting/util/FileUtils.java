@@ -9,7 +9,7 @@ import java.util.zip.Deflater;
 @Slf4j
 public class FileUtils {
 
-    private static final String TYPE = "text/csv";
+    private static final String CSV_TYPE = "text/csv";
 
     public static byte[] compressFile(byte[] data){
         Deflater deflater = new Deflater();
@@ -35,7 +35,7 @@ public class FileUtils {
 
     public static boolean isCSVFile(MultipartFile file){
         log.info("********FileUtils isCSVFile*********");
-        if(TYPE.equals(file.getContentType())){
+        if(CSV_TYPE.equals(file.getContentType())){
             log.info("File uploaded is CSV");
             log.info("************************************");
             return true;

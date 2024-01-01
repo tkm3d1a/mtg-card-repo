@@ -9,10 +9,10 @@ import java.util.List;
 @Repository
 public interface UserCardRepository extends JpaRepository<UserCard, Integer> {
 
-    int countByCollectorNumberEqualsAndSetIDEquals(int collectorNumber, String setID);
+    int countByCollectorNumberEqualsAndSetIDEquals(String collectorNumber, String setID);
     int countByAppUserEqualsAndCollectorNumberEqualsAndSetIDEquals(
             AppUser appUser,
-            int collectorNumber,
+            String collectorNumber,
             String setID);
 
     List<UserCard> findAllByAppUserIs(AppUser appUser);
