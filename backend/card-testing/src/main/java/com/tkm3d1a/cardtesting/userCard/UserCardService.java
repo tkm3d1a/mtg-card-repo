@@ -113,15 +113,17 @@ public class UserCardService {
         File file = new File(filePath.toUri());
         try (FileWriter outputFile = new FileWriter(file)) {
             CSVWriter csvWriter = new CSVWriter(outputFile);
-            String[] header = {"ScryfallID","Count"};
+            String[] header = {"ScryfallID","SetID","CollectorNumber","CardName"};
             csvWriter.writeNext(header);
             log.info("File created");
             List<UserCard> userCards = userCardRepository.findAllByAppUserIs(foundUser);
-            String[] line = new String[2];
+            String[] line = new String[4];
             for(UserCard userCard : userCards){
                 line[0] = userCard.getCard().getId();
                 //TODO: add counting of total cards somewhere?
                 line[1] = userCard.getSetID(); //TODO: change to total count of the card ID above
+                line[2] = userCard.getCollectorNumber();
+                line[3] = userCard.getCard().getCardName();
                 csvWriter.writeNext(line);
             }
         } catch (Exception e) {
@@ -139,12 +141,13 @@ public class UserCardService {
 
         try {
             foundCard = cardsService.getCardBySetAndCollector(setID, collectorNumber);
-            log.info("Card found in database!");
+//            log.info("Card found in database!");
         } catch (Exception e){
             log.info("Card not in Database, adding to database now...");
             SingleCard scryfallFoundCard = scryfallService.callCardSearchSetAndCollectorNumber(
                     setID,
                     collectorNumber);
+//            log.info("Post Scryfall call: {} {}", scryfallFoundCard.getName(), scryfallFoundCard.getSet());
             foundCard = cardsService.addSingleCard(scryfallFoundCard);
         }
 

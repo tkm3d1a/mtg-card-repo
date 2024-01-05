@@ -25,6 +25,8 @@ public class CardsService {
 
     public Cards addSingleCard(SingleCard singleCard){
         //check if card is in DB all ready
+        log.info("Adding card: {} {} {}", singleCard.getCollector_number(),singleCard.getSet(),
+                singleCard.getColor_identity());
         Cards addedCard = saveNewSingleCard(singleCard);
         log.info("Added Card");
         return addedCard;
@@ -70,7 +72,7 @@ public class CardsService {
             card.setCardCollectorNumber(singleCard.getCollector_number());
             String colorId = convertArrayListToString(singleCard.getColor_identity());
             card.setCardColorIdentity(colorId);
-            if(!singleCard.getLayout().equals("transform")){
+            if(!singleCard.getLayout().equals("transform") && singleCard.getColors() != null){
                 String colors = convertArrayListToString(singleCard.getColors());
                 card.setCardColors(colors);
             }
@@ -102,6 +104,7 @@ public class CardsService {
      */
     private static String convertArrayListToString(ArrayList<String> passedArrayList) {
         StringBuilder newStringBuilder = new StringBuilder();
+        log.info("Passed Array List: {}", passedArrayList);
         for(String s : passedArrayList){
             newStringBuilder.append(s);
             newStringBuilder.append(',');
