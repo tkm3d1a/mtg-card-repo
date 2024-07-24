@@ -1,5 +1,13 @@
 # Overall notes
 
+## Full card download attempted (24JUL2024)
+
+- Stored in `./notes/default-cards-20240724090714.json`
+  - Full download
+  - looks like ~ 94k lines
+  - multiple cards have duplicates in the list
+    - can't tell if there is a consistent ID value past the card name
+
 ## Analyizing card json objects
 
 using `sample-card-info.json` file as base for below notes
