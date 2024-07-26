@@ -1,0 +1,19 @@
+version: '3.5'
+name: mtg-testing
+
+services:
+  mariadb:
+    image: mariadb:11.4.2
+    container_name: db-testing
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_USER: mtg-admin
+      MYSQL_PASSWORD: mtg-admin-password
+      MYSQL_DATABASE: mtg-testing
+    ports:
+      - "3306:3306"
+    volumes:
+      - "mtg-db-testing:/docker-entrypoint-initdb.d/1.sql"
+
+volumes:
+  mtg-db-testing:
