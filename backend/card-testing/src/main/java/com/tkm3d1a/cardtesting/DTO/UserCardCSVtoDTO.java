@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.userCard.objects;
+package com.tkm3d1a.cardtesting.DTO;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserCardCSVBean {
+public class UserCardCSVtoDTO {
 
     @CsvBindByName
     private String collectorNumber;

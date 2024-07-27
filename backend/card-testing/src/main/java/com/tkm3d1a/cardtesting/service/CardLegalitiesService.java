@@ -1,5 +1,7 @@
-package com.tkm3d1a.cardtesting.cardLeagalities;
+package com.tkm3d1a.cardtesting.service;
 
+import com.tkm3d1a.cardtesting.entity.CardLegalities;
+import com.tkm3d1a.cardtesting.repository.CardLegalitiesRepository;
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.userCard.objects;
+package com.tkm3d1a.cardtesting.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCardJSON {
+public class UserCardDTO {
     private String setLetters;
     private String collectorNumber;
     private boolean isFoil;

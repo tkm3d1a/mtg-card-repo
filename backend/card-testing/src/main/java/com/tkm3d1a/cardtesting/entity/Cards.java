@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.cards;
+package com.tkm3d1a.cardtesting.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

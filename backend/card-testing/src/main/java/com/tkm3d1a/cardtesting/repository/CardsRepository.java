@@ -1,5 +1,6 @@
-package com.tkm3d1a.cardtesting.cards;
+package com.tkm3d1a.cardtesting.repository;
 
+import com.tkm3d1a.cardtesting.entity.Cards;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

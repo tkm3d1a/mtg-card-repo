@@ -1,5 +1,7 @@
-package com.tkm3d1a.cardtesting.defaultCardData;
+package com.tkm3d1a.cardtesting.service;
 
+import com.tkm3d1a.cardtesting.entity.DefaultCardData;
+import com.tkm3d1a.cardtesting.repository.DefaultCardDataRepository;
 import com.tkm3d1a.cardtesting.util.FileUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

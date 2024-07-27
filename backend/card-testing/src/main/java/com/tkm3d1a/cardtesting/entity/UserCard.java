@@ -1,7 +1,7 @@
-package com.tkm3d1a.cardtesting.userCard;
+package com.tkm3d1a.cardtesting.entity;
 
-import com.tkm3d1a.cardtesting.appUser.AppUser;
-import com.tkm3d1a.cardtesting.cards.Cards;
+import com.tkm3d1a.cardtesting.entity.AppUser;
+import com.tkm3d1a.cardtesting.entity.Cards;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,14 +1,15 @@
-package com.tkm3d1a.cardtesting.userCard;
+package com.tkm3d1a.cardtesting.service;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.tkm3d1a.cardtesting.appUser.AppUser;
-import com.tkm3d1a.cardtesting.cards.Cards;
-import com.tkm3d1a.cardtesting.cards.CardsService;
+import com.tkm3d1a.cardtesting.entity.AppUser;
+import com.tkm3d1a.cardtesting.entity.Cards;
+import com.tkm3d1a.cardtesting.entity.UserCard;
+import com.tkm3d1a.cardtesting.repository.UserCardRepository;
 import com.tkm3d1a.cardtesting.scryfall.ScryfallService;
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
-import com.tkm3d1a.cardtesting.userCard.objects.UserCardCSVBean;
-import com.tkm3d1a.cardtesting.userCard.objects.UserCardJSON;
+import com.tkm3d1a.cardtesting.DTO.UserCardCSVtoDTO;
+import com.tkm3d1a.cardtesting.DTO.UserCardDTO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,34 +47,23 @@ public class UserCardService {
         multipartFile.transferTo(file);
         log.info("File transferred!");
 
-        List<UserCardCSVBean> userCardCSVBeans = new CsvToBeanBuilder<UserCardCSVBean>(new FileReader(file))
-                .withType(UserCardCSVBean.class)
+        List<UserCardCSVtoDTO> userCardCSVtoDTOS = new CsvToBeanBuilder<UserCardCSVtoDTO>(new FileReader(file))
+                .withType(UserCardCSVtoDTO.class)
                 .build()
                 .parse();
-        log.info("First Line from CSVBean: {}\t{}\t{}\t{}",
-                userCardCSVBeans.get(0).getSetID(),
-                userCardCSVBeans.get(0).getCollectorNumber(),
-                userCardCSVBeans.get(0).isFoil(),
-                userCardCSVBeans.get(0).isList());
-        log.info("21st Line from CSVBean : {}\t{}\t{}\t{}",
-                userCardCSVBeans.get(20).getSetID(),
-                userCardCSVBeans.get(20).getCollectorNumber(),
-                userCardCSVBeans.get(20).isFoil(),
-                userCardCSVBeans.get(20).isList());
-        log.info("Adding Cards to database...");
 
         List<UserCard> userCards = new ArrayList<>();
-        for(UserCardCSVBean bean : userCardCSVBeans){
+        for(UserCardCSVtoDTO userCardCSVtoDTO : userCardCSVtoDTOS){
             UserCard userCard = new UserCard();
             userCard.setAppUser(appUser);
 
-            Cards card = findCard(bean.getSetID(), bean.getCollectorNumber());
+            Cards card = findCard(userCardCSVtoDTO.getSetID(), userCardCSVtoDTO.getCollectorNumber());
             userCard.setCard(card);
 
-            userCard.setSetID(bean.getSetID());
-            userCard.setCollectorNumber(bean.getCollectorNumber());
-            userCard.setIsFoil(bean.isFoil());
-            userCard.setIsList(bean.isList());
+            userCard.setSetID(userCardCSVtoDTO.getSetID());
+            userCard.setCollectorNumber(userCardCSVtoDTO.getCollectorNumber());
+            userCard.setIsFoil(userCardCSVtoDTO.isFoil());
+            userCard.setIsList(userCardCSVtoDTO.isList());
 
             userCards.add(userCard);
         }
@@ -82,17 +72,17 @@ public class UserCardService {
     }
 
 
-    public int addSingleCard(UserCardJSON userCardJSON, AppUser appUser) {
+    public int addSingleCard(UserCardDTO userCardDTO, AppUser appUser) {
         UserCard userCard = new UserCard();
         userCard.setAppUser(appUser);
 
-        Cards card = findCard(userCardJSON.getSetLetters(), userCardJSON.getCollectorNumber());
+        Cards card = findCard(userCardDTO.getSetLetters(), userCardDTO.getCollectorNumber());
         userCard.setCard(card);
 
-        userCard.setCollectorNumber(userCardJSON.getCollectorNumber());
-        userCard.setSetID(userCardJSON.getSetLetters());
-        userCard.setIsFoil(userCardJSON.isFoil());
-        userCard.setIsList(userCardJSON.isList());
+        userCard.setCollectorNumber(userCardDTO.getCollectorNumber());
+        userCard.setSetID(userCardDTO.getSetLetters());
+        userCard.setIsFoil(userCardDTO.isFoil());
+        userCard.setIsList(userCardDTO.isList());
 
         userCardRepository.save(userCard);
 

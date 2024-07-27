@@ -1,4 +1,4 @@
-package com.tkm3d1a.cardtesting.defaultCardData;
+package com.tkm3d1a.cardtesting.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,5 +1,7 @@
-package com.tkm3d1a.cardtesting.appUser;
+package com.tkm3d1a.cardtesting.service;
 
+import com.tkm3d1a.cardtesting.entity.AppUser;
+import com.tkm3d1a.cardtesting.repository.AppUserRepository;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

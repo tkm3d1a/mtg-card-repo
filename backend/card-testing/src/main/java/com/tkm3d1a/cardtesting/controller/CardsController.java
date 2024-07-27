@@ -1,6 +1,7 @@
-package com.tkm3d1a.cardtesting.cards;
+package com.tkm3d1a.cardtesting.controller;
 
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
+import com.tkm3d1a.cardtesting.service.CardsService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

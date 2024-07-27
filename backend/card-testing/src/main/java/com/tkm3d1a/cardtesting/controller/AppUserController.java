@@ -1,6 +1,7 @@
-package com.tkm3d1a.cardtesting.appUser;
+package com.tkm3d1a.cardtesting.controller;
 
-import com.tkm3d1a.cardtesting.appUser.objects.AddUser;
+import com.tkm3d1a.cardtesting.DTO.AddUserDTO;
+import com.tkm3d1a.cardtesting.service.AppUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,12 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addAppUser(@RequestBody AddUser addUser) {
+    public ResponseEntity<?> addAppUser(@RequestBody AddUserDTO addUserDTO) {
         String message;
 
-        String newId = appUserService.addUser(addUser.getUserName());
+        String newId = appUserService.addUser(addUserDTO.getUserName());
         message = "New UserId for user:\n" +
-                "Username:\t" + addUser.getUserName() + "\n" +
+                "Username:\t" + addUserDTO.getUserName() + "\n" +
                 "User ID:\t" + newId;
 
         return ResponseEntity.status(HttpStatus.OK)

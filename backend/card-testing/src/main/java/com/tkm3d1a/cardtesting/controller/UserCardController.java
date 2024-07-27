@@ -1,8 +1,10 @@
-package com.tkm3d1a.cardtesting.userCard;
+package com.tkm3d1a.cardtesting.controller;
 
-import com.tkm3d1a.cardtesting.appUser.AppUser;
-import com.tkm3d1a.cardtesting.appUser.AppUserService;
-import com.tkm3d1a.cardtesting.userCard.objects.UserCardJSON;
+import com.tkm3d1a.cardtesting.entity.AppUser;
+import com.tkm3d1a.cardtesting.service.AppUserService;
+import com.tkm3d1a.cardtesting.entity.UserCard;
+import com.tkm3d1a.cardtesting.service.UserCardService;
+import com.tkm3d1a.cardtesting.DTO.UserCardDTO;
 import com.tkm3d1a.cardtesting.util.FileUtils;
 import jakarta.annotation.Resource;
 import org.springframework.core.io.FileSystemResource;
@@ -74,12 +76,12 @@ public class UserCardController {
     /**
      * End point for adding a single card to the database for a specific user.
      * <br>
-     * @param userCardJSON A JSON described by {@link UserCardJSON}
+     * @param userCardDTO A JSON described by {@link UserCardDTO}
      * @param userName include in Header to indicate which username this card belongs too
      * @return {@link ResponseEntity}
      */
     @PostMapping(value = "/add-single-card")
-    public ResponseEntity<?> addSingleCard(@RequestBody UserCardJSON userCardJSON,
+    public ResponseEntity<?> addSingleCard(@RequestBody UserCardDTO userCardDTO,
                                            @RequestHeader("userName") String userName) {
         AppUser foundUser;
         try{
@@ -89,11 +91,11 @@ public class UserCardController {
                     .body(e.getMessage());
         }
 
-        int cardCount = userCardService.addSingleCard(userCardJSON, foundUser);
+        int cardCount = userCardService.addSingleCard(userCardDTO, foundUser);
         String message = "Card inserted:\n\tSet: " +
-                userCardJSON.getSetLetters() +
+                userCardDTO.getSetLetters() +
                 "\n\tCN: " +
-                userCardJSON.getCollectorNumber() +
+                userCardDTO.getCollectorNumber() +
                 "\nTotal number collected:\n" +
                 "\t" + cardCount;
 

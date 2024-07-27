@@ -1,5 +1,6 @@
-package com.tkm3d1a.cardtesting.defaultCardData;
+package com.tkm3d1a.cardtesting.controller;
 
+import com.tkm3d1a.cardtesting.service.DefaultCardDataService;
 import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
