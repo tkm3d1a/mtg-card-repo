@@ -1,7 +1,9 @@
 package com.tkm3d1a.cardtesting.controller;
 
 import com.tkm3d1a.cardtesting.service.DefaultCardDataService;
-import jakarta.annotation.Resource;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +16,10 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/upload-card-data")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultCardController {
 
-    @Resource
-    private DefaultCardDataService defaultCardDataService;
+    private final @NonNull DefaultCardDataService defaultCardDataService;
 
     @PostMapping
     public ResponseEntity<?> uploadBulkDataFile(@RequestParam("file")MultipartFile file) throws IOException {

@@ -1,12 +1,12 @@
 package com.tkm3d1a.cardtesting.service;
 
-import com.tkm3d1a.cardtesting.service.CardLegalitiesService;
-import com.tkm3d1a.cardtesting.service.CardPricesService;
 import com.tkm3d1a.cardtesting.entity.Cards;
 import com.tkm3d1a.cardtesting.repository.CardsRepository;
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
-import jakarta.annotation.Resource;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,16 +14,12 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CardsService {
 
-    @Resource
-    private CardsRepository cardsRepository;
-
-    @Resource
-    private CardPricesService cardPricesService;
-
-    @Resource
-    private CardLegalitiesService cardLegalitiesService;
+    private final @NonNull CardsRepository cardsRepository;
+    private final @NonNull CardPricesService cardPricesService;
+    private final @NonNull CardLegalitiesService cardLegalitiesService;
 
     public Cards addSingleCard(SingleCard singleCard){
         //check if card is in DB all ready

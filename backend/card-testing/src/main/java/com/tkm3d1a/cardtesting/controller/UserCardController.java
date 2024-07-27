@@ -6,7 +6,9 @@ import com.tkm3d1a.cardtesting.entity.UserCard;
 import com.tkm3d1a.cardtesting.service.UserCardService;
 import com.tkm3d1a.cardtesting.DTO.UserCardDTO;
 import com.tkm3d1a.cardtesting.util.FileUtils;
-import jakarta.annotation.Resource;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,13 +22,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user-cards")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserCardController {
 
-    @Resource
-    private UserCardService userCardService;
-
-    @Resource
-    private AppUserService appUserService;
+    private final @NonNull UserCardService userCardService;
+    private final @NonNull AppUserService appUserService;
 
     /**
      * Endpoint for Adding a csv card file.
@@ -112,9 +112,8 @@ public class UserCardController {
      */
     @GetMapping(value = "/cards")
     public ResponseEntity<?> getAllCardsJSON(@RequestHeader("userName") String userName,
-                                             @RequestHeader(value = "return",
-                                                     required = false) String returnType) throws IOException {
-
+                                             @RequestHeader(value = "return", required = false) String returnType)
+            throws IOException {
         if(returnType != null && !returnType.isEmpty()) {
             if (returnType.equalsIgnoreCase("file")) {
                 return getAllCardsCSV(userName, returnType);
@@ -144,7 +143,8 @@ public class UserCardController {
      */
     @GetMapping(value = "/cards", produces = "text/csv")
     public ResponseEntity<?> getAllCardsCSV(@RequestHeader("userName") String userName,
-                                            @RequestHeader("return") String returnType) throws IOException {
+                                            @RequestHeader("return") String returnType)
+            throws IOException {
         if(!returnType.equalsIgnoreCase("file")){
             return getAllCardsJSON(userName, returnType);
         }

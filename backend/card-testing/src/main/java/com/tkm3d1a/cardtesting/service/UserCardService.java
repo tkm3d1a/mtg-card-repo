@@ -10,8 +10,10 @@ import com.tkm3d1a.cardtesting.scryfall.ScryfallService;
 import com.tkm3d1a.cardtesting.scryfall.objects.SingleCard;
 import com.tkm3d1a.cardtesting.DTO.UserCardCSVtoDTO;
 import com.tkm3d1a.cardtesting.DTO.UserCardDTO;
-import jakarta.annotation.Resource;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,16 +28,12 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserCardService {
 
-    @Resource
-    private UserCardRepository userCardRepository;
-
-    @Resource
-    private ScryfallService scryfallService;
-
-    @Resource
-    private CardsService cardsService;
+    private final @NonNull UserCardRepository userCardRepository;
+    private final @NonNull ScryfallService scryfallService;
+    private final @NonNull CardsService cardsService;
 
     public void uploadBulkCards(MultipartFile multipartFile, AppUser appUser) throws IOException {
         //TODO: identify and create temporary storage location for file storage

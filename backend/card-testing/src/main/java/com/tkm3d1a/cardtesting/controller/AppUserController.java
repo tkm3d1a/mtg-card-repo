@@ -2,8 +2,10 @@ package com.tkm3d1a.cardtesting.controller;
 
 import com.tkm3d1a.cardtesting.DTO.AddUserDTO;
 import com.tkm3d1a.cardtesting.service.AppUserService;
-import jakarta.annotation.Resource;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/app-user")
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AppUserController {
 
-    @Resource
-    private AppUserService appUserService;
+    private final @NonNull AppUserService appUserService;
 
     @PostMapping("/add-user")
     public ResponseEntity<?> addAppUser(@RequestBody AddUserDTO addUserDTO) {
