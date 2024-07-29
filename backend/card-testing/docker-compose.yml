@@ -1,5 +1,5 @@
-version: '3.5'
-name: mtg-testing
+version: '3'
+#name: mtg-testing
 
 services:
   mariadb:
