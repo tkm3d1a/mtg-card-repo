@@ -4,7 +4,7 @@ version: '3'
 services:
   mariadb:
     image: mariadb:11.4.2
-    container_name: db-testing
+    container_name: mtg-db-testing
     environment:
       MYSQL_ROOT_PASSWORD: supersecret
       MYSQL_USER: mtg-admin
