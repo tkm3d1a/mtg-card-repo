@@ -1,5 +1,9 @@
 # Ideation of design
 
+## Design - Current - 14Aug2024
+
+![Prelim Design from 14Aug2024](PrelimDesign_14Aug24.png)
+
 ## Card information
 
 Card size:
