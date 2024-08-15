@@ -12,3 +12,7 @@
   - [McMaster - M2x7mm, Nylon](https://www.mcmaster.com/95610A113/)
 - Inserts
   - [McMaster - M2 - Brass](https://www.mcmaster.com/94180A307/)
+- O-Rings
+  - [McMaster - 21mmx25mm](https://www.mcmaster.com/9262K673/)
+- Stepper Motor
+  - [Offbrand - NEMA 17 - 17Ncm](https://www.omc-stepperonline.com/e-series-nema-17-bipolar-1-8deg-17ncm-24-07oz-in-1a-42x42x23mm-4-wires-17he08-1004s)

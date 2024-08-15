@@ -1,8 +1,8 @@
 # Ideation of design
 
-## Design - Current - 14Aug2024
+## Design - Current - 15Aug2024
 
-![Prelim Design from 14Aug2024](PrelimDesign_14Aug24.png)
+![Prelim Design from 15Aug2024](PrelimDesign_15Aug24.png)
 
 ## Card information
 
@@ -46,3 +46,9 @@ Card size:
 - sorting bin mechanism
   - linear rail?
   - belt driven?
+
+## Old Design Images
+
+### 14Aug2024
+
+![Prelim Design from 14Aug2024](PrelimDesign_14Aug24.png)
